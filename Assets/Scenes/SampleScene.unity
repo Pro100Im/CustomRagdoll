@@ -316,7 +316,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 58.6
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -343,7 +343,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.24769247, y: -3.4605686e-15, z: 8.847259e-16, w: 0.96883875}
-  m_LocalPosition: {x: -0.33527, y: 3, z: -4.57375}
+  m_LocalPosition: {x: -0.335227, y: 3.9353755, z: -5.5771046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1282,6 +1282,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1744352056 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4785631349205715791, guid: 133f03c8d0aadfd42b5b3734d138b7e1, type: 3}
+  m_PrefabInstance: {fileID: 7602025009242322397}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1819551054
 GameObject:
   m_ObjectHideFlags: 0
@@ -1358,11 +1363,11 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 543450653422818869}
+    TrackingTarget: {fileID: 1744352056}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 58.6
+    FieldOfView: 60
     OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -1390,7 +1395,7 @@ Transform:
   m_GameObject: {fileID: 1819551054}
   serializedVersion: 2
   m_LocalRotation: {x: 0.24769242, y: -3.5040989e-15, z: 1.0549949e-15, w: 0.96883875}
-  m_LocalPosition: {x: -0.33527, y: 3, z: -4.57375}
+  m_LocalPosition: {x: -0.335227, y: 3.9353755, z: -5.5771046}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1410,11 +1415,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TrackerSettings:
     BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    PositionDamping: {x: 0.5, y: 0.5, z: 0.5}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 0, y: 3, z: -3}
+  FollowOffset: {x: 0, y: 3, z: -4}
 --- !u!1 &2058580168
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,11 +1556,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &543450653422818869 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4242668767491919519, guid: 133f03c8d0aadfd42b5b3734d138b7e1, type: 3}
-  m_PrefabInstance: {fileID: 7602025009242322397}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7602025009242322397
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1605,8 +1605,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6381585683089054194, guid: 133f03c8d0aadfd42b5b3734d138b7e1, type: 3}
-      propertyPath: m_Constraints
-      value: 112
+      propertyPath: m_ImplicitCom
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6381585683089054194, guid: 133f03c8d0aadfd42b5b3734d138b7e1, type: 3}
+      propertyPath: m_ImplicitTensor
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6839498000293917805, guid: 133f03c8d0aadfd42b5b3734d138b7e1, type: 3}
       propertyPath: m_Name

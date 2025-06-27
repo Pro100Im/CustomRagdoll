@@ -3,12 +3,16 @@ using UnityEngine;
 
 namespace Ragdoll
 {
-    [RequireComponent(typeof(Character))]
+    [RequireComponent(typeof(Animator))]
     public class BaseRagdoll : MonoBehaviour
     {
+        [field: SerializeField] public Animator Animator { get; private set; }
+        [Space]
         [SerializeField] private float _magnitudeThreshold = 5f;
         [Space]
         [SerializeField] private Character _character;
+
+        [field: SerializeField] public string GettingUpAnim { get; private set; } = "Getting Up";
 
         public Rigidbody[] RagdollRigidbodies { get; private set; }
 
@@ -39,12 +43,19 @@ namespace Ragdoll
 
         public void EnableRagdoll()
         {
-            _character.SetCharacterEnable(false);
-
             foreach(var rigidbody in RagdollRigidbodies)
             {
                 rigidbody.isKinematic = false;
             }
+
+            _character.SetCharacterEnable(false);
+        }
+
+        public void GettingUp()
+        {
+            Animator.Rebind();
+            Animator.Update(0f);
+            Animator.Play(GettingUpAnim);
         }
 
         private void FixedUpdate()
@@ -78,7 +89,7 @@ namespace Ragdoll
                         var direction = (nearestBone.transform.position - collision.contacts[0].point).normalized;
                         var forceMagnitude = massDifference;
 
-                        nearestBone.AddForceAtPosition(impulse + direction * forceMagnitude, contactPoint, ForceMode.Impulse);
+                        nearestBone.AddForceAtPosition(impulse + direction * forceMagnitude * 2, contactPoint, ForceMode.Impulse);
                     }
                     else
                     {

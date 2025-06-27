@@ -54,8 +54,8 @@ public class Character : MonoBehaviour
     public void SetCharacterEnable(bool value)
     {
         //_rb.linearVelocity = Vector3.zero;
-        //_rb.detectCollisions = value;
         _animator.enabled = value;
+        //_rb.detectCollisions = value;
     }
 
     private void FixedUpdate()
@@ -93,7 +93,7 @@ public class Character : MonoBehaviour
         {
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Acceleration);
             _animator.SetTrigger(_jumpAnimTrigger);
-        }    
+        }
         else if(!_isGrounded)
             _rb.AddForce(Vector3.down * GameConstants.PlayerGravity, ForceMode.Acceleration);
     }

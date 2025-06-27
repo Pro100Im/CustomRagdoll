@@ -41,7 +41,7 @@ namespace Ragdoll
 
         private void GetUp()
         {
-            _context.TransitionTo(new InactiveRagdollState());
+            _context.TransitionTo(new GettingUpRagdollState());
         }
     }
 }
