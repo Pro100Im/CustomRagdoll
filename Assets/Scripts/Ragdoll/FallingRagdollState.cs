@@ -13,6 +13,7 @@ namespace Ragdoll
         {
             _stableTime = 0f;
             _context.EnableRagdoll();
+            _context.LockCharacter(true);
         }
 
         public override void Execute()

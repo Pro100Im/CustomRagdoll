@@ -4,17 +4,15 @@ namespace Ragdoll
 {
     public class GettingUpRagdollState : BaseRagdollState
     {
-        private Transform _hipsBone;
-        private Transform _characterTransform;
-
         public override void Enter()
         {
-            _hipsBone = _context.Animator.GetBoneTransform(HumanBodyBones.Hips);
-            _characterTransform = _context.transform;
+            var hipsBone = _context.HipsBone;
+            var characterTransform = _context.transform;
+            var animator = _context.Animator;
 
-            AlignPositionToHips();
+            AlignPositionToHips(hipsBone, characterTransform);
+            GettingUp(animator);
 
-            _context.GettingUp();
             _context.DisableRagdoll();
         }
 
@@ -22,30 +20,37 @@ namespace Ragdoll
         {
             if(_context.Animator.GetCurrentAnimatorStateInfo(0).IsName(_context.GettingUpAnim) == false)
             {
-                Debug.LogWarning("Trans To In");
                 _context.TransitionTo(new InactiveRagdollState());
             }
         }
 
-        private void AlignRotationToHips()
+        private void GettingUp(Animator animator)
         {
-            var originalHipsPosition = _hipsBone.position;
-            var originalHipsRotation = _hipsBone.rotation;
-            var desiredDirection = _hipsBone.up * -1;
+            animator.Rebind();
+            animator.Play(_context.GettingUpAnim);
+            animator.Update(0f);
+            animator.enabled = true;
+        }
+
+        private void AlignRotationToHips(Transform hipsBone, Transform characterTransform)
+        {
+            var originalHipsPosition = hipsBone.position;
+            var originalHipsRotation = hipsBone.rotation;
+            var desiredDirection = hipsBone.up * -1;
             desiredDirection.y = 0;
             desiredDirection.Normalize();
 
-            var fromToRotation = Quaternion.FromToRotation(_characterTransform.forward, desiredDirection);
-            _characterTransform.rotation *= fromToRotation;
+            var fromToRotation = Quaternion.FromToRotation(characterTransform.forward, desiredDirection);
+            characterTransform.rotation *= fromToRotation;
 
-            _hipsBone.position = originalHipsPosition;
-            _hipsBone.rotation = originalHipsRotation;
+            hipsBone.position = originalHipsPosition;
+            hipsBone.rotation = originalHipsRotation;
         }
 
-        private void AlignPositionToHips()
+        private void AlignPositionToHips(Transform hipsBone, Transform characterTransform)
         {
-            Vector3 originalHipsPosition = _hipsBone.position;
-            _characterTransform.position = _hipsBone.position;
+            Vector3 originalHipsPosition = hipsBone.position;
+            characterTransform.position = hipsBone.position;
 
             //Vector3 positionOffset = _standUpBoneTransforms[0].Position;
             //positionOffset.y = 0;
@@ -57,7 +62,7 @@ namespace Ragdoll
             //    transform.position = new Vector3(transform.position.x, hitInfo.point.y, transform.position.z);
             //}
 
-            _hipsBone.position = originalHipsPosition;
+            hipsBone.position = originalHipsPosition;
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Ragdoll
 {
-    public class BoneTransform : MonoBehaviour
+    public class BoneTransform
     {
         public Vector3 Position { get; set; }
 

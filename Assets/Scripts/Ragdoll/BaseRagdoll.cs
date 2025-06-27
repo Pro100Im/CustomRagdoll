@@ -14,13 +14,32 @@ namespace Ragdoll
 
         [field: SerializeField] public string GettingUpAnim { get; private set; } = "Getting Up";
 
+        public Transform HipsBone { get; private set; }
+
         public Rigidbody[] RagdollRigidbodies { get; private set; }
+
+        public BoneTransform[] _standUpBoneTransforms { get; private set; }
+        public BoneTransform[] _ragdollBoneTransforms { get; private set; }
+
+        private Transform[] _bones;
 
         private BaseRagdollState _state;
 
         private void Awake()
         {
             RagdollRigidbodies = GetComponentsInChildren<Rigidbody>();
+            HipsBone = Animator.GetBoneTransform(HumanBodyBones.Hips);
+
+            _bones = HipsBone.GetComponentsInChildren<Transform>();
+            _standUpBoneTransforms = new BoneTransform[_bones.Length];
+            _ragdollBoneTransforms = new BoneTransform[_bones.Length];
+
+            for(int boneIndex = 0; boneIndex < _bones.Length; boneIndex++)
+            {
+                _standUpBoneTransforms[boneIndex] = new BoneTransform();
+                _ragdollBoneTransforms[boneIndex] = new BoneTransform();
+            }
+
             TransitionTo(new InactiveRagdollState());
         }
 
@@ -37,8 +56,6 @@ namespace Ragdoll
             {
                 rigidbody.isKinematic = true;
             }
-
-            _character.SetCharacterEnable(true);
         }
 
         public void EnableRagdoll()
@@ -47,16 +64,9 @@ namespace Ragdoll
             {
                 rigidbody.isKinematic = false;
             }
-
-            _character.SetCharacterEnable(false);
         }
 
-        public void GettingUp()
-        {
-            Animator.Rebind();
-            Animator.Update(0f);
-            Animator.Play(GettingUpAnim);
-        }
+        public void LockCharacter(bool value) => _character.SetCharacterEnable(!value);
 
         private void FixedUpdate()
         {

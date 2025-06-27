@@ -53,9 +53,11 @@ public class Character : MonoBehaviour
 
     public void SetCharacterEnable(bool value)
     {
-        //_rb.linearVelocity = Vector3.zero;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.detectCollisions = value;
+        _rb.isKinematic = !value;
+
         _animator.enabled = value;
-        //_rb.detectCollisions = value;
     }
 
     private void FixedUpdate()
