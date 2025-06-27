@@ -9,6 +9,8 @@ namespace Ragdoll
             _context = context;
         }
 
+        public abstract void Enter();
+
         public abstract void Execute();
     }
 }

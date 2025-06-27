@@ -54,10 +54,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.107789926
-  m_Height: 0.5389496
+  m_Radius: 0.06278279
+  m_Height: 0.53827626
   m_Direction: 1
-  m_Center: {x: 0, y: 0.2694748, z: 0}
+  m_Center: {x: 3.736474e-10, y: 0.26913813, z: -0.0025539442}
 --- !u!54 &7318977139101385224
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -633,8 +633,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4145676, y: 0.2986912, z: 0.26990363}
-  m_Center: {x: -0.00025372207, y: 0.08833136, z: -0.020895079}
+  m_Size: {x: 0.3197424, y: 0.2986912, z: 0.22248733}
+  m_Center: {x: 0, y: 0.08833136, z: 0.002813086}
 --- !u!54 &5737623656939529177
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1288,10 +1288,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.111770175
+  m_Radius: 0.067784995
   m_Height: 0.4470807
   m_Direction: 1
-  m_Center: {x: 0, y: 0.22354035, z: 0}
+  m_Center: {x: 0.0044165277, y: 0.22353998, z: -0.035095997}
 --- !u!54 &6578070274219226736
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1356,7 +1356,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -1519,10 +1519,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.12390212
-  m_Height: 0.41300705
+  m_Radius: 0.09727937
+  m_Height: 0.4127995
   m_Direction: 1
-  m_Center: {x: 0, y: 0.20650353, z: 0}
+  m_Center: {x: -0.01293024, y: 0.2064009, z: 0.006497942}
 --- !u!54 &9127593879347615226
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1587,7 +1587,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -1650,10 +1650,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.10765525
+  m_Radius: 0.06278279
   m_Height: 0.53827626
   m_Direction: 1
-  m_Center: {x: 0, y: 0.26913813, z: 0}
+  m_Center: {x: 3.736474e-10, y: 0.26913813, z: -0.0025539442}
 --- !u!54 &3445914371765017464
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1718,7 +1718,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -1847,7 +1847,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -2005,10 +2005,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.05256668
+  m_Radius: 0.048600283
   m_Height: 0.21026672
   m_Direction: 1
-  m_Center: {x: 0, y: 0.10513336, z: 0}
+  m_Center: {x: 6.796209e-10, y: 0.10513336, z: 0.003966399}
 --- !u!54 &3943254860795777180
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2073,7 +2073,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -2136,10 +2136,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.052574713
-  m_Height: 0.21029885
+  m_Radius: 0.048600283
+  m_Height: 0.21026672
   m_Direction: 1
-  m_Center: {x: 0, y: 0.105149426, z: 0}
+  m_Center: {x: 6.796209e-10, y: 0.10513336, z: 0.003966399}
 --- !u!54 &8638708229363135591
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2204,7 +2204,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -2510,6 +2510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 5
+  _rotationSpeed: 10
   _jumpForce: 700
   _groundCheckRadius: 0.1
   _speed: Speed
@@ -2534,7 +2535,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e9a3692a8d50a48b8b36826e9bfc27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animator: {fileID: 8852824116924624779}
+  _magnitudeThreshold: 5
+  _character: {fileID: 8354984521797035920}
 --- !u!54 &6381585683089054194
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2735,10 +2737,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.11298202
-  m_Height: 0.45192808
+  m_Radius: 0.067784995
+  m_Height: 0.4470807
   m_Direction: 1
-  m_Center: {x: 0, y: 0.22596404, z: 0}
+  m_Center: {x: -0.004416528, y: 0.22353998, z: -0.035095997}
 --- !u!54 &3914698954718466913
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2803,7 +2805,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -2932,7 +2934,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity
@@ -3027,10 +3029,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.123839855
+  m_Radius: 0.09727937
   m_Height: 0.4127995
   m_Direction: 1
-  m_Center: {x: 0, y: 0.20639975, z: 0}
+  m_Center: {x: 0.012930236, y: 0.2064009, z: 0.006497942}
 --- !u!54 &8227837762742439230
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3095,7 +3097,7 @@ CharacterJoint:
     limit: 0
     bounciness: 0
     contactDistance: 0
-  m_EnableProjection: 0
+  m_EnableProjection: 1
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
   m_BreakForce: Infinity

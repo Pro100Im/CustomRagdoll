@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
     [Space]
     [SerializeField] private LayerMask _groundLayer;
 
-    private const float _magnitudeTreshold = 0.001f;
+    private const float _magnitudeThreshold = 0.001f;
 
     private bool _jumpPressed;
     private bool _isGrounded;
@@ -51,8 +51,18 @@ public class Character : MonoBehaviour
         _jumpPressed = true;
     }
 
+    public void SetCharacterEnable(bool value)
+    {
+        //_rb.linearVelocity = Vector3.zero;
+        //_rb.detectCollisions = value;
+        _animator.enabled = value;
+    }
+
     private void FixedUpdate()
     {
+        if(_rb.isKinematic) 
+            return;
+
         _isGrounded = Physics.CheckSphere(_groundCheck.position, _groundCheckRadius, _groundLayer);
 
         Move();
@@ -68,7 +78,7 @@ public class Character : MonoBehaviour
 
         _rb.linearVelocity = velocity;
 
-        if(moveDirection.sqrMagnitude > _magnitudeTreshold)
+        if(moveDirection.sqrMagnitude > _magnitudeThreshold)
         {
             var targetRotation = Quaternion.LookRotation(moveDirection);
             _rb.MoveRotation(Quaternion.Slerp(_rb.rotation, targetRotation, _rotationSpeed * Time.fixedDeltaTime));

@@ -1,51 +1,110 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
 namespace Ragdoll
 {
-    [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(Character))]
     public class BaseRagdoll : MonoBehaviour
     {
-        [SerializeField] private Animator _animator;
+        [SerializeField] private float _magnitudeThreshold = 5f;
+        [Space]
+        [SerializeField] private Character _character;
 
-        private Rigidbody[] _ragdollRigidbodies;
+        public Rigidbody[] RagdollRigidbodies { get; private set; }
 
         private BaseRagdollState _state;
 
         private void Awake()
         {
-            _ragdollRigidbodies = GetComponentsInChildren<Rigidbody>();
-            DisableRagdoll();
-            //TransitionTo();
+            RagdollRigidbodies = GetComponentsInChildren<Rigidbody>();
+            TransitionTo(new InactiveRagdollState());
         }
 
         public void TransitionTo(BaseRagdollState state)
         {
             _state = state;
             _state.SetContext(this);
+            _state.Enter();
         }
 
-        private void DisableRagdoll()
+        public void DisableRagdoll()
         {
-            foreach(var rigidbody in _ragdollRigidbodies.Skip(1))
+            foreach(var rigidbody in RagdollRigidbodies.Skip(1))
             {
                 rigidbody.isKinematic = true;
             }
 
-            _animator.enabled = true;
-            //_characterController.enabled = true;
+            _character.SetCharacterEnable(true);
         }
 
-        private void EnableRagdoll()
+        public void EnableRagdoll()
         {
-            foreach(var rigidbody in _ragdollRigidbodies)
+            _character.SetCharacterEnable(false);
+
+            foreach(var rigidbody in RagdollRigidbodies)
             {
                 rigidbody.isKinematic = false;
             }
-
-            _animator.enabled = false;
-            //_characterController.enabled = false;
         }
+
+        private void FixedUpdate()
+        {
+            _state.Execute();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            var impulse = collision.impulse;
+
+            if(impulse.magnitude > _magnitudeThreshold)
+            {
+                TransitionTo(new FallingRagdollState());
+
+                Vector3 contactPoint = collision.contacts[0].point;
+
+                var nearestBone = FindNearestBone(contactPoint);
+
+                if(nearestBone != null)
+                {
+                    var otherRb = collision.rigidbody;
+
+                    if(otherRb == null)
+                        return;
+
+                    var massDifference = otherRb.mass - nearestBone.mass;
+
+                    if(massDifference > 0f)
+                    {
+                        var direction = (nearestBone.transform.position - collision.contacts[0].point).normalized;
+                        var forceMagnitude = massDifference;
+
+                        nearestBone.AddForceAtPosition(impulse + direction * forceMagnitude, contactPoint, ForceMode.Impulse);
+                    }
+                    else
+                    {
+                        nearestBone.AddForceAtPosition(impulse, contactPoint, ForceMode.Impulse);
+                    }           
+                }
+            }
+        }
+
+        private Rigidbody FindNearestBone(Vector3 point)
+        {
+            Rigidbody closest = null;
+            float minDist = float.MaxValue;
+
+            foreach(var rb in RagdollRigidbodies.Skip(1))
+            {
+                float dist = Vector3.Distance(rb.worldCenterOfMass, point);
+                if(dist < minDist)
+                {
+                    minDist = dist;
+                    closest = rb;
+                }
+            }
+
+            return closest;
+        }
+
     }
 }
