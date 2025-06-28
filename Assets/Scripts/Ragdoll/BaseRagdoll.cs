@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace Ragdoll
@@ -6,6 +9,7 @@ namespace Ragdoll
     [RequireComponent(typeof(Animator))]
     public class BaseRagdoll : MonoBehaviour
     {
+        [field: SerializeField] public float TimeToResetBones { get; private set; } = 0.5f;
         [field: SerializeField] public Animator Animator { get; private set; }
         [Space]
         [SerializeField] private float _magnitudeThreshold = 5f;
@@ -18,10 +22,25 @@ namespace Ragdoll
 
         public Rigidbody[] RagdollRigidbodies { get; private set; }
 
-        public BoneTransform[] _standUpBoneTransforms { get; private set; }
-        public BoneTransform[] _ragdollBoneTransforms { get; private set; }
+        public BoneTransform[] StandUpBoneTransforms { get; private set; }
+        public BoneTransform[] RagdollBoneTransforms { get; private set; }
 
-        private Transform[] _bones;
+        public Transform[] Bones { get; private set; }
+
+        public float GroundY
+        {
+            get
+            {
+                if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo))
+                {
+                    return hitInfo.point.y;
+                }
+
+                return transform.position.y;
+            }
+        }
+
+        private Dictionary<Type, BaseRagdollState> _states;
 
         private BaseRagdollState _state;
 
@@ -30,24 +49,34 @@ namespace Ragdoll
             RagdollRigidbodies = GetComponentsInChildren<Rigidbody>();
             HipsBone = Animator.GetBoneTransform(HumanBodyBones.Hips);
 
-            _bones = HipsBone.GetComponentsInChildren<Transform>();
-            _standUpBoneTransforms = new BoneTransform[_bones.Length];
-            _ragdollBoneTransforms = new BoneTransform[_bones.Length];
+            Bones = HipsBone.GetComponentsInChildren<Transform>();
+            StandUpBoneTransforms = new BoneTransform[Bones.Length];
+            RagdollBoneTransforms = new BoneTransform[Bones.Length];
 
-            for(int boneIndex = 0; boneIndex < _bones.Length; boneIndex++)
+            for(int boneIndex = 0; boneIndex < Bones.Length; boneIndex++)
             {
-                _standUpBoneTransforms[boneIndex] = new BoneTransform();
-                _ragdollBoneTransforms[boneIndex] = new BoneTransform();
+                StandUpBoneTransforms[boneIndex] = new BoneTransform();
+                RagdollBoneTransforms[boneIndex] = new BoneTransform();
             }
 
-            TransitionTo(new InactiveRagdollState());
+            _states = new Dictionary<Type, BaseRagdollState>
+            {
+                { typeof(InactiveRagdollState), new InactiveRagdollState(this)},
+                { typeof(FallingRagdollState), new FallingRagdollState(this)},
+                { typeof(ResettingRagdollState), new ResettingRagdollState(this)},
+                { typeof(GettingUpRagdollState), new GettingUpRagdollState(this)}
+            };
+
+            TransitionTo(typeof(InactiveRagdollState));
         }
 
-        public void TransitionTo(BaseRagdollState state)
+        public void TransitionTo(Type stateType)
         {
-            _state = state;
-            _state.SetContext(this);
-            _state.Enter();
+            if(_states.TryGetValue(stateType, out var state))
+            {
+                _state = state;
+                _state.Enter();
+            }
         }
 
         public void DisableRagdoll()
@@ -79,10 +108,9 @@ namespace Ragdoll
 
             if(impulse.magnitude > _magnitudeThreshold)
             {
-                TransitionTo(new FallingRagdollState());
+                TransitionTo(typeof(FallingRagdollState));
 
-                Vector3 contactPoint = collision.contacts[0].point;
-
+                var contactPoint = collision.contacts[0].point;
                 var nearestBone = FindNearestBone(contactPoint);
 
                 if(nearestBone != null)
@@ -112,11 +140,12 @@ namespace Ragdoll
         private Rigidbody FindNearestBone(Vector3 point)
         {
             Rigidbody closest = null;
-            float minDist = float.MaxValue;
+            var minDist = float.MaxValue;
 
             foreach(var rb in RagdollRigidbodies.Skip(1))
             {
-                float dist = Vector3.Distance(rb.worldCenterOfMass, point);
+                var dist = Vector3.Distance(rb.worldCenterOfMass, point);
+
                 if(dist < minDist)
                 {
                     minDist = dist;

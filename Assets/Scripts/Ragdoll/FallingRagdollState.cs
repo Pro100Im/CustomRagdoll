@@ -9,6 +9,10 @@ namespace Ragdoll
         private const float _requiredStableDuration = 1.5f;
         private const float _magnitudeThreshold = 0.1f;
 
+        public FallingRagdollState(BaseRagdoll context) : base(context)
+        {
+        }
+
         public override void Enter()
         {
             _stableTime = 0f;
@@ -42,7 +46,7 @@ namespace Ragdoll
 
         private void GetUp()
         {
-            _context.TransitionTo(new GettingUpRagdollState());
+            _context.TransitionTo(typeof(ResettingRagdollState));
         }
     }
 }

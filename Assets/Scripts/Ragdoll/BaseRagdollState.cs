@@ -4,7 +4,7 @@ namespace Ragdoll
     {
         protected BaseRagdoll _context;
 
-        public void SetContext(BaseRagdoll context)
+        public BaseRagdollState(BaseRagdoll context)
         {
             _context = context;
         }
