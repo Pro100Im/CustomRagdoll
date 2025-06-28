@@ -120,7 +120,7 @@ namespace Ragdoll
                     elapsedPercentage);
             }
 
-            if(elapsedPercentage < 1)
+            if(elapsedPercentage <= 1)
                 return;
 
             _context.TransitionTo(typeof(GettingUpRagdollState));

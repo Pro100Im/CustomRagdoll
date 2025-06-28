@@ -2535,10 +2535,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e9a3692a8d50a48b8b36826e9bfc27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <TimeToResetBones>k__BackingField: 1
   <Animator>k__BackingField: {fileID: 8852824116924624779}
   _magnitudeThreshold: 5
   _character: {fileID: 8354984521797035920}
-  <GettingUpAnim>k__BackingField: Getting Up
+  <GettingUpAnim>k__BackingField: Stand Up
 --- !u!54 &6381585683089054194
 Rigidbody:
   m_ObjectHideFlags: 0
