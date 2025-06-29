@@ -16,7 +16,7 @@ namespace Ragdoll
 
         public override void Execute()
         {
-            if(_context.Animator.GetCurrentAnimatorStateInfo(0).IsName(_context.GettingUpAnim) == false)
+            if(_context.Animator.GetCurrentAnimatorStateInfo(0).IsName(GetStandUpAnim()) == false)
             {
                 _context.TransitionTo(typeof(InactiveRagdollState));
             }
@@ -27,9 +27,11 @@ namespace Ragdoll
             var animator = _context.Animator;
 
             animator.Rebind();
-            animator.Play(_context.GettingUpAnim);
+            animator.Play(GetStandUpAnim());
             animator.Update(0f);
             animator.enabled = true;
         }
+
+        private string GetStandUpAnim() => _context.IsFacingUp ? _context.BackGetUpAnim : _context.FaceGetUpAnim;
     }
 }

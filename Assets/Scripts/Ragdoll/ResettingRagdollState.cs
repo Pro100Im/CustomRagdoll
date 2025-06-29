@@ -8,12 +8,14 @@ namespace Ragdoll
 
         public ResettingRagdollState(BaseRagdoll context) : base(context)
         {
-            PopulateAnimationStartBoneTransforms();
+            PopulateAnimationStartBoneTransforms(_context.BackStandUpBoneTransforms, _context.BackGetUpAnim);
+            PopulateAnimationStartBoneTransforms(_context.FaceStandUpBoneTransforms, _context.FaceGetUpAnim);
         }
 
         public override void Enter()
         {
             _elapsedResetBonesTime = 0;
+            _context.IsFacingUp = _context.HipsBone.forward.y > 0;
 
             AlignRotationToHips();
             AlignPositionToHips();
@@ -31,7 +33,10 @@ namespace Ragdoll
             var characterTransform = _context.transform;
             var originalHipsPosition = hipsBone.position;
             var originalHipsRotation = hipsBone.rotation;
-            var desiredDirection = hipsBone.up * -1;
+            var desiredDirection = hipsBone.up;
+
+            if(_context.IsFacingUp)
+                desiredDirection *= -1;
 
             desiredDirection.y = 0;
             desiredDirection.Normalize();
@@ -48,7 +53,7 @@ namespace Ragdoll
             var groundY = _context.GroundY;
             var hipsBone = _context.HipsBone;
             var characterTransform = _context.transform;
-            var standUpBoneTransforms = _context.StandUpBoneTransforms;
+            var standUpBoneTransforms = GetStandUpBoneTransforms();
             var originalHipsPosition = hipsBone.position;
             var positionOffset = standUpBoneTransforms[0].Position;
 
@@ -73,12 +78,10 @@ namespace Ragdoll
             }
         }
 
-        private void PopulateAnimationStartBoneTransforms()
+        private void PopulateAnimationStartBoneTransforms(BoneTransform[] standUpBoneTransforms, string clipName)
         {
             var animator = _context.Animator;
-            var clipName = _context.GettingUpAnim;
             var characterTransform = _context.transform;
-            var standUpBoneTransforms = _context.StandUpBoneTransforms;
             var positionBeforeSampling = characterTransform.position;
             var rotationBeforeSampling = characterTransform.rotation;
 
@@ -101,7 +104,7 @@ namespace Ragdoll
         {
             var bones = _context.Bones;
             var ragdollBoneTransforms = _context.RagdollBoneTransforms;
-            var standUpBoneTransforms = _context.StandUpBoneTransforms;
+            var standUpBoneTransforms = GetStandUpBoneTransforms();
             var timeToResetBones = _context.TimeToResetBones;
 
             _elapsedResetBonesTime += Time.fixedDeltaTime;
@@ -125,5 +128,8 @@ namespace Ragdoll
 
             _context.TransitionTo(typeof(GettingUpRagdollState));
         }
+
+        private BoneTransform[] GetStandUpBoneTransforms()
+            => _context.IsFacingUp ? _context.BackStandUpBoneTransforms : _context.FaceStandUpBoneTransforms;
     }
 }

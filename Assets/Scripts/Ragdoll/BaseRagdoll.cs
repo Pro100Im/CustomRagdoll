@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 namespace Ragdoll
@@ -15,14 +14,21 @@ namespace Ragdoll
         [SerializeField] private float _magnitudeThreshold = 5f;
         [Space]
         [SerializeField] private Character _character;
+        [Space]
+        [SerializeField] private string _backGetUpAnim = "Stand Up";
+        [SerializeField] private string _faceGetUpAnim = "Standing Up";
 
-        [field: SerializeField] public string GettingUpAnim { get; private set; } = "Getting Up";
+        public string BackGetUpAnim => _backGetUpAnim;
+        public string FaceGetUpAnim => _faceGetUpAnim;
+
+        public bool IsFacingUp { get; set; }
 
         public Transform HipsBone { get; private set; }
 
         public Rigidbody[] RagdollRigidbodies { get; private set; }
 
-        public BoneTransform[] StandUpBoneTransforms { get; private set; }
+        public BoneTransform[] BackStandUpBoneTransforms { get; private set; }
+        public BoneTransform[] FaceStandUpBoneTransforms { get; private set; }
         public BoneTransform[] RagdollBoneTransforms { get; private set; }
 
         public Transform[] Bones { get; private set; }
@@ -48,14 +54,16 @@ namespace Ragdoll
         {
             RagdollRigidbodies = GetComponentsInChildren<Rigidbody>();
             HipsBone = Animator.GetBoneTransform(HumanBodyBones.Hips);
-
             Bones = HipsBone.GetComponentsInChildren<Transform>();
-            StandUpBoneTransforms = new BoneTransform[Bones.Length];
+
+            BackStandUpBoneTransforms = new BoneTransform[Bones.Length];
+            FaceStandUpBoneTransforms = new BoneTransform[Bones.Length];
             RagdollBoneTransforms = new BoneTransform[Bones.Length];
 
             for(int boneIndex = 0; boneIndex < Bones.Length; boneIndex++)
             {
-                StandUpBoneTransforms[boneIndex] = new BoneTransform();
+                BackStandUpBoneTransforms[boneIndex] = new BoneTransform();
+                FaceStandUpBoneTransforms[boneIndex] = new BoneTransform();
                 RagdollBoneTransforms[boneIndex] = new BoneTransform();
             }
 
@@ -113,26 +121,26 @@ namespace Ragdoll
                 var contactPoint = collision.contacts[0].point;
                 var nearestBone = FindNearestBone(contactPoint);
 
-                if(nearestBone != null)
+                if(nearestBone == null)
+                    return;
+
+                var otherRb = collision.rigidbody;
+
+                if(otherRb == null)
+                    return;
+
+                var massDifference = otherRb.mass - nearestBone.mass;
+
+                if(massDifference > 0f)
                 {
-                    var otherRb = collision.rigidbody;
+                    var direction = (nearestBone.transform.position - collision.contacts[0].point).normalized;
+                    var forceMagnitude = massDifference;
 
-                    if(otherRb == null)
-                        return;
-
-                    var massDifference = otherRb.mass - nearestBone.mass;
-
-                    if(massDifference > 0f)
-                    {
-                        var direction = (nearestBone.transform.position - collision.contacts[0].point).normalized;
-                        var forceMagnitude = massDifference;
-
-                        nearestBone.AddForceAtPosition(impulse + direction * forceMagnitude * 2, contactPoint, ForceMode.Impulse);
-                    }
-                    else
-                    {
-                        nearestBone.AddForceAtPosition(impulse, contactPoint, ForceMode.Impulse);
-                    }           
+                    nearestBone.AddForceAtPosition(impulse + direction * forceMagnitude * 5, contactPoint, ForceMode.Impulse);
+                }
+                else
+                {
+                    nearestBone.AddForceAtPosition(impulse, contactPoint, ForceMode.Impulse);
                 }
             }
         }
@@ -155,6 +163,5 @@ namespace Ragdoll
 
             return closest;
         }
-
     }
 }
