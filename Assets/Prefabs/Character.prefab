@@ -1338,7 +1338,7 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -80
+    limit: -90
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
@@ -2055,11 +2055,11 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -70
+    limit: -10
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 10
+    limit: 70
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
@@ -2186,11 +2186,11 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -70
+    limit: -10
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:
-    limit: 10
+    limit: 70
     bounciness: 0
     contactDistance: 0
   m_SwingLimitSpring:
@@ -2539,7 +2539,8 @@ MonoBehaviour:
   <Animator>k__BackingField: {fileID: 8852824116924624779}
   _magnitudeThreshold: 5
   _character: {fileID: 8354984521797035920}
-  <GettingUpAnim>k__BackingField: Stand Up
+  _backGetUpAnim: Stand Up
+  _faceGetUpAnim: Standing Up
 --- !u!54 &6381585683089054194
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2790,7 +2791,7 @@ CharacterJoint:
     spring: 0
     damper: 0
   m_LowTwistLimit:
-    limit: -80
+    limit: -90
     bounciness: 0
     contactDistance: 0
   m_HighTwistLimit:

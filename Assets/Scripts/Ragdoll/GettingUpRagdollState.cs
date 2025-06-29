@@ -27,8 +27,7 @@ namespace Ragdoll
             var animator = _context.Animator;
 
             animator.Rebind();
-            animator.Play(GetStandUpAnim());
-            animator.Update(0f);
+            animator.Play(GetStandUpAnim(), 0 ,0);
             animator.enabled = true;
         }
 
