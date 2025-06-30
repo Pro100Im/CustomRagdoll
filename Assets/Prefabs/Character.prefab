@@ -2929,6 +2929,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <TimeToResetBones>k__BackingField: 0.5
   <Animator>k__BackingField: {fileID: 8852824116924624779}
+  <HipsBone>k__BackingField: {fileID: 4785631349205715791}
   _magnitudeThreshold: 15
   _character: {fileID: 8354984521797035920}
   _backGetUpAnim: Stand Up

@@ -1774,6 +1774,10 @@ PrefabInstance:
       value: Character
       objectReference: {fileID: 0}
     - target: {fileID: 8852824116924624779, guid: 133f03c8d0aadfd42b5b3734d138b7e1, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852824116924624779, guid: 133f03c8d0aadfd42b5b3734d138b7e1, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}

@@ -10,6 +10,7 @@ namespace Ragdoll
     {
         [field: SerializeField] public float TimeToResetBones { get; private set; } = 0.5f;
         [field: SerializeField] public Animator Animator { get; private set; }
+        [field: SerializeField] public Transform HipsBone { get; private set; }
         [Space]
         [SerializeField] private float _magnitudeThreshold = 15f;
         [Space]
@@ -21,9 +22,7 @@ namespace Ragdoll
         public string BackGetUpAnim => _backGetUpAnim;
         public string FaceGetUpAnim => _faceGetUpAnim;
 
-        public bool IsFacingUp { get; set; }
-
-        public Transform HipsBone { get; private set; }
+        public bool IsFacingUp { get; set; } 
 
         public Rigidbody[] RagdollRigidbodies { get; private set; }
 
@@ -53,7 +52,6 @@ namespace Ragdoll
         private void Awake()
         {
             RagdollRigidbodies = GetComponentsInChildren<Rigidbody>();
-            HipsBone = Animator.GetBoneTransform(HumanBodyBones.Hips);
             Bones = HipsBone.GetComponentsInChildren<Transform>();
 
             BackStandUpBoneTransforms = new BoneTransform[Bones.Length];
