@@ -139,9 +139,7 @@ namespace Ragdoll
                     nearestBone.AddForceAtPosition(impulse + direction * forceMagnitude * 5, contactPoint, ForceMode.Impulse);
                 }
                 else
-                {
                     nearestBone.AddForceAtPosition(impulse, contactPoint, ForceMode.Impulse);
-                }
             }
         }
 

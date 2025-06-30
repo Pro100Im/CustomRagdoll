@@ -7,7 +7,8 @@ public class RotateObstacle : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Quaternion deltaRotation = Quaternion.AngleAxis(_rotationSpeed * Time.fixedDeltaTime, Vector3.up);
+        var deltaRotation = Quaternion.AngleAxis(_rotationSpeed * Time.fixedDeltaTime, Vector3.up);
+
         _rb.MoveRotation(deltaRotation * _rb.rotation);
     }
 }
