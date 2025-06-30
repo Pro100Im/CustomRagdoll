@@ -10,8 +10,6 @@ namespace Ragdoll
         public override void Enter()
         {
             GettingUp();
-
-            _context.DisableRagdoll();
         }
 
         public override void Execute()

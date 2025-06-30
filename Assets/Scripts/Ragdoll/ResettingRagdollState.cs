@@ -15,7 +15,9 @@ namespace Ragdoll
         public override void Enter()
         {
             _elapsedResetBonesTime = 0;
+
             _context.IsFacingUp = _context.HipsBone.forward.y > 0;
+            _context.DisableRagdoll();
 
             AlignRotationToHips();
             AlignPositionToHips();
