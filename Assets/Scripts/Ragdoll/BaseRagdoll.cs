@@ -11,7 +11,7 @@ namespace Ragdoll
         [field: SerializeField] public float TimeToResetBones { get; private set; } = 0.5f;
         [field: SerializeField] public Animator Animator { get; private set; }
         [Space]
-        [SerializeField] private float _magnitudeThreshold = 5f;
+        [SerializeField] private float _magnitudeThreshold = 15f;
         [Space]
         [SerializeField] private Character _character;
         [Space]
@@ -112,9 +112,9 @@ namespace Ragdoll
 
         private void OnCollisionEnter(Collision collision)
         {
-            var impulse = collision.impulse;
+            var impulseH = collision.impulse;
 
-            if(impulse.magnitude > _magnitudeThreshold)
+            if(impulseH.magnitude > _magnitudeThreshold)
             {
                 TransitionTo(typeof(FallingRagdollState));
 
@@ -129,14 +129,13 @@ namespace Ragdoll
                 if(otherRb == null)
                     return;
 
-                var massDifference = otherRb.mass - nearestBone.mass;
-
-                if(massDifference > 0f)
+                if(otherRb.mass > RagdollRigidbodies[0].mass)
                 {
+                    var massDifference = otherRb.mass - nearestBone.mass;
                     var direction = (nearestBone.transform.position - collision.contacts[0].point).normalized;
-                    var forceMagnitude = massDifference;
+                    var forceMagnitude = collision.impulse + direction * massDifference;
 
-                    nearestBone.AddForceAtPosition(impulse + direction * forceMagnitude * 5, contactPoint, ForceMode.Impulse);
+                    nearestBone.AddForceAtPosition(forceMagnitude , contactPoint, ForceMode.Impulse);
                 }
             }
         }
