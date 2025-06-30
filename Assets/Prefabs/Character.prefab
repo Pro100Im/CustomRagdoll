@@ -2927,7 +2927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e9a3692a8d50a48b8b36826e9bfc27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <TimeToResetBones>k__BackingField: 1
+  <TimeToResetBones>k__BackingField: 0.5
   <Animator>k__BackingField: {fileID: 8852824116924624779}
   _magnitudeThreshold: 15
   _character: {fileID: 8354984521797035920}
